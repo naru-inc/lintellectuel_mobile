@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'design_items/carroussel.dart';
+
 void main() {
   runApp(LintellectuelApp());
 }
