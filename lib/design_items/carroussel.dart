@@ -16,7 +16,7 @@ class _CarrousselState extends State<Carroussel> {
 
   Future<String> _getPosts() async {
     final response = await http
-        .get("https://www.lintellectuel.com/wp-json/wp/v2/posts?_embed=true?categories=2");
+        .get("https://www.lintellectuel.com/wp-json/wp/v2/posts?categories=2&_embed=true");
 
         if (response.statusCode == 200) {
       posts = (json.decode(response.body) as List)
