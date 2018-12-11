@@ -34,7 +34,7 @@ class Post {
         datePublished: DateTime.parse(json['date']),
         htmlTitle: unescape.convert(json['title']['rendered']),
         excerpt:
-            unescape.convert(json['excerpt']['rendered']).substring(0, 150) +
+            unescape.convert(json['excerpt']['rendered']).substring(0, 100) +
                 " ...",
         htmlContent: json['content']['rendered'],
         imageUrl: json['_embedded']['wp:featuredmedia'][0]['media_details']

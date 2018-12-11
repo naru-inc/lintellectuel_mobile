@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'design_items/carroussel.dart';
+import 'routes/home_route.dart';
 
 void main() {
   runApp(LintellectuelApp());
@@ -14,7 +15,7 @@ class LintellectuelApp extends StatelessWidget{
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'L\'intellectuel',
-      home: Carroussel()
+      home: HomeRoute()
     );
   }
 }
