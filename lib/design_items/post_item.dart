@@ -4,11 +4,14 @@ import 'package:lintellectuel_mobile/routes/postDetails_route.dart';
 
 class PostItem extends StatelessWidget {
   final String title;
+  final String authorName;
   final String excerpt;
   final String imageUrl;
   final String content;
   final double value;
   final double shadowVal;
+  final DateTime datePublished;
+
 
   const PostItem(
       {Key key,
@@ -16,7 +19,7 @@ class PostItem extends StatelessWidget {
       this.excerpt,
       this.imageUrl,
       this.value,
-      this.shadowVal, this.content})
+      this.shadowVal, this.content, this.authorName, this.datePublished})
       : super(key: key);
 
       void _navigateToPostDetail (BuildContext context){
@@ -33,10 +36,7 @@ class PostItem extends StatelessWidget {
               child: Padding(
                   padding: EdgeInsets.only(top: 30),
                   child: Image(
-                      image: NetworkImage(
-                          'https://www.lintellectuel.com/storage/2018/09/title_white.png')))
-
-              /* child: Image(image: NetworkImage('https://www.lintellectuel.com/storage/2018/09/Untitled-1.png'),) */),
+                      image: AssetImage('images/main_logo_w.png')))),
           backgroundColor: Colors.black,
           elevation: 0,
         ),
@@ -45,6 +45,8 @@ class PostItem extends StatelessWidget {
                 title: title,
                 content: content,
                 imageUrl: imageUrl,
+                authorName:authorName,
+                datePublished:datePublished
               )
         );
 
@@ -59,58 +61,68 @@ class PostItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: ()=>_navigateToPostDetail(context),
-        child: Center(
-      child: new SizedBox(
-        height: Curves.easeOut.transform(value) * 400,
-        width: Curves.easeOut.transform(value) * 350,
-        child: new Card(
-          color: Colors.transparent,
-          elevation: Curves.easeOut.transform(shadowVal) * 5,
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                  Curves.easeOut.transform(value) * 10.0)),
-          margin: const EdgeInsets.all(4.0),
-          child: Container(
-            child: Center(
-              child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.only(
-                            left: Curves.easeOut.transform(value) * 20.0,
-                            right: Curves.easeOut.transform(value) * 20.0),
-                        child: Text(
-                          this.title,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: Curves.easeOut.transform(value) * 35.0,
-                          ),
-                        )),
-                    Padding(
-                        padding: EdgeInsets.all(
-                            Curves.easeOut.transform(value) * 20.0),
-                        child: Html(
-                          data: this.excerpt,
-                          defaultTextStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: Curves.easeOut.transform(value) * 18.0),
-                        ))
-                  ]),
+
+        return Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+
+            children: <Widget>[
+
+          new SizedBox(
+          height: Curves.easeOut.transform(value) * 350,
+          child :  InkWell(
+            onTap: ()=>_navigateToPostDetail(context),
+            child: new Card(
+              color: Colors.transparent,
+              elevation: Curves.easeOut.transform(shadowVal) * 5,
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      Curves.easeOut.transform(value) * 10.0)),
+              margin: const EdgeInsets.all(4.0),
+              child: Container(
+                child: Center(
+                  child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: Curves.easeOut.transform(value) * 20.0,
+                                right: Curves.easeOut.transform(value) * 20.0),
+                            child: Text(
+                              this.title,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: Curves.easeOut.transform(value) * 24.0,
+                              ),
+                            )),
+                        Padding(
+                            padding: EdgeInsets.all(
+                                Curves.easeOut.transform(value) * 14.0),
+                            child: Html(
+                              data: this.excerpt,
+                              defaultTextStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: Curves.easeOut.transform(value) * 18.0),
+                            ))
+                      ]),
+                ),
+                decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                        fit: BoxFit.cover,
+                        colorFilter: new ColorFilter.mode(
+                            Colors.black.withOpacity(shadowVal * 0.5),
+                            BlendMode.darken),
+                        image: new NetworkImage(this.imageUrl))),
+              ),
             ),
-            decoration: new BoxDecoration(
-                image: new DecorationImage(
-                    fit: BoxFit.cover,
-                    colorFilter: new ColorFilter.mode(
-                        Colors.black.withOpacity(shadowVal * 0.7),
-                        BlendMode.darken),
-                    image: new NetworkImage(this.imageUrl))),
           ),
-        ),
-      ),
-    ));
+        )
+
+            ],
+
+          )
+     );
   }
 }

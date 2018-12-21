@@ -32,8 +32,6 @@ class _CarrousselState extends State<Carroussel> {
     return "success!";
   }
 
-  final String apiUrl =
-      "https://www.lintellectuel.com/wp-json/wp/v2/posts?categories=2";
 
   @override
   void initState() {
@@ -42,7 +40,7 @@ class _CarrousselState extends State<Carroussel> {
     controller = new PageController(
         initialPage: currentpage,
         keepPage: false,
-        viewportFraction: 0.7 //size of the current page (card)
+        viewportFraction: 0.9 //size of the current page (card)
         );
   }
 
@@ -54,29 +52,14 @@ class _CarrousselState extends State<Carroussel> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
-        child: AppBar(
-          flexibleSpace: Center(
-              child: Padding(
-                  padding: EdgeInsets.only(top: 30),
-                  child: Image(
-                      image: NetworkImage(
-                          'https://www.lintellectuel.com/storage/2018/09/Untitled-1.png')))
-
-              /* child: Image(image: NetworkImage('https://www.lintellectuel.com/storage/2018/09/Untitled-1.png'),) */),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
-      ),
-      body: new Container(
+    return  new Container(
+        height: 400,
           child: new PageView.builder(
               controller: controller,
               itemCount: posts.length,
               itemBuilder: (context, index) => builder(index)),
-      ),
-    );
+      );
+
   }
 
   builder(int index) {
@@ -93,10 +76,12 @@ class _CarrousselState extends State<Carroussel> {
         }
 
         return PostItem(
+          datePublished:posts[index].datePublished,
           title: posts[index].htmlTitle,
           excerpt: posts[index].excerpt,
           imageUrl: posts[index].imageUrl.toString(),
           content: posts[index].htmlContent,
+          authorName: posts[index].authorName,
           value: value,
           shadowVal: shadowVal,
         );

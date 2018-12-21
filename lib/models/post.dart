@@ -1,4 +1,3 @@
-
 import 'package:html_unescape/html_unescape.dart';
 import 'package:html/parser.dart' show parse;
 
@@ -9,6 +8,8 @@ class Post {
   String excerpt;
   String htmlContent;
   String authorId;
+  String authorName;
+  String authorImage;
   String imageUrl;
   String thumbnail;
   List<int> categoriesId;
@@ -20,6 +21,7 @@ class Post {
       this.excerpt,
       this.htmlContent,
       this.authorId,
+      this.authorName,
       this.imageUrl,
       this.thumbnail,
       this.categoriesId});
@@ -38,6 +40,7 @@ class Post {
                 " ...",
         htmlContent: json['content']['rendered'],
         imageUrl: json['_embedded']['wp:featuredmedia'][0]['media_details']
-            ['sizes']['medium']['source_url']);
+            ['sizes']['medium']['source_url'],
+    authorName:json['_embedded']['author'][0]['name'],);
   }
 }
