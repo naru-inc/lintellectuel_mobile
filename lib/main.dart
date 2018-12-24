@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'design_items/carroussel.dart';
 import 'routes/home_route.dart';
+import 'design_items/post_listview.dart';
 
 void main() {
   runApp(LintellectuelApp());
@@ -30,9 +31,24 @@ class LintellectuelApp extends StatelessWidget {
                 elevation: 0,
               ),
             ),
-            body: HomeRoute()
-    ));
+            body: new ListView(shrinkWrap: true, children: <Widget>[
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    HomeRoute(),
+                    Container(
+                        padding: const EdgeInsets.all(20),
+                        child: Text(
+                          'Articles Récents',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 26),
+                        )),
+                    PostListView(),
+                  ],
+                ),
+              ),
+            ])));
   }
 }
-
-

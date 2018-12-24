@@ -21,7 +21,6 @@ class PostDetailRoute extends StatelessWidget {
       Center(
           child: new SizedBox(
         child:
-            //height: 500,
             Padding(
                 padding: EdgeInsets.all(20.0),
                 child: new Card(

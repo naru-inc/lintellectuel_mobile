@@ -28,8 +28,7 @@ class Post {
 
   factory Post.fromJson(Map<String, dynamic> json) {
     var unescape = new HtmlUnescape();
-    var document = parse(unescape.convert(json['excerpt']['rendered']));
-    print(document.text);
+
 
     return new Post(
         id: json['id'],
