@@ -53,7 +53,7 @@ class _CarrousselState extends State<Carroussel> {
   @override
   Widget build(BuildContext context) {
     return  new Container(
-        height: 400,
+        height: 500,
           child: new PageView.builder(
               controller: controller,
               itemCount: posts.length,

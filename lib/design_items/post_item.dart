@@ -63,28 +63,26 @@ class PostItem extends StatelessWidget {
   Widget build(BuildContext context) {
 
         return Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-
-            children: <Widget>[
-
-          new SizedBox(
-          height: Curves.easeOut.transform(value) * 350,
+          child : SizedBox(
+          height: Curves.easeOut.transform(value) * 450,
           child :  InkWell(
             onTap: ()=>_navigateToPostDetail(context),
             child: new Card(
-              color: Colors.transparent,
-              elevation: Curves.easeOut.transform(shadowVal) * 5,
-              clipBehavior: Clip.antiAlias,
+              color: Colors.grey,
+              elevation: Curves.easeOut.transform(shadowVal) * 1,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(
-                      Curves.easeOut.transform(value) * 10.0)),
-              margin: const EdgeInsets.all(4.0),
+                      Curves.easeOut.transform(value) * 5.0)),
               child: Container(
+
                 child: Center(
                   child: new Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
+
+
                         Padding(
                             padding: EdgeInsets.only(
                                 left: Curves.easeOut.transform(value) * 20.0,
@@ -119,10 +117,6 @@ class PostItem extends StatelessWidget {
             ),
           ),
         )
-
-            ],
-
-          )
      );
   }
 }
