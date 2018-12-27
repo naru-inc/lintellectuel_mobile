@@ -87,38 +87,11 @@ class _BackdropTitle extends AnimatedWidget {
         // This makes a smooth animation between the two texts.
         Stack(
           children: <Widget>[
-            Opacity(
-              opacity: CurvedAnimation(
-                parent: ReverseAnimation(animation),
-                curve: Interval(0.5, 1.0),
-              ).value,
-              child: FractionalTranslation(
-                translation: Tween<Offset>(
-                  begin: Offset.zero,
-                  end: Offset(0.5, 0.0),
-                ).evaluate(animation),
-                child: Semantics(
+              Semantics(
                     label: 'hide categories menu',
                     child: ExcludeSemantics(child: backTitle)
                 ),
-              ),
-            ),
-            Opacity(
-              opacity: CurvedAnimation(
-                parent: animation,
-                curve: Interval(0.5, 1.0),
-              ).value,
-              child: FractionalTranslation(
-                translation: Tween<Offset>(
-                  begin: Offset(-0.25, 0.0),
-                  end: Offset.zero,
-                ).evaluate(animation),
-                child: Semantics(
-                    label: 'show categories menu',
-                    child: ExcludeSemantics(child: frontTitle)
-                ),
-              ),
-            ),
+
           ],
         )
       ]),
@@ -225,7 +198,7 @@ class _BackdropState extends State<Backdrop>
               padding: EdgeInsets.only(top: 30),
               child: Image(
                   image: AssetImage('images/main_logo_w.png'))))*/
-      backgroundColor: Colors.red,
+      backgroundColor: Colors.black,
       elevation: 0,
 
     ));

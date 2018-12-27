@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lintellectuel_mobile/design_items/post_item.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lintellectuel_mobile/models/category.dart';
 import 'package:lintellectuel_mobile/models/post.dart';
+import 'package:lintellectuel_mobile/models/category_repository.dart';
 
 class Carroussel extends StatefulWidget {
   @override
@@ -13,6 +15,7 @@ class _CarrousselState extends State<Carroussel> {
   PageController controller;
   int currentpage = 0;
   List<Post> posts = List();
+
 
   Future<String> _getPosts() async {
     final response = await http.get(
@@ -31,6 +34,8 @@ class _CarrousselState extends State<Carroussel> {
     });
     return "success!";
   }
+
+
 
 
   @override

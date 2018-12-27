@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lintellectuel_mobile/models/category.dart';
+import 'package:lintellectuel_mobile/models/category_repository.dart';
 import 'package:lintellectuel_mobile/models/post.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -11,22 +13,16 @@ class PostListView extends StatefulWidget {
 
 }
 class _PostListViewState extends State<PostListView>{
-  List<Post> posts = List();
+  List<Category> categories = List();
 
   Future<String> _getPosts() async {
-    final response = await http.get(
-        "https://www.lintellectuel.com/wp-json/wp/v2/posts?_embed=true");
+    final response = await CategoryRepository.getCategories();
 
-    if (response.statusCode == 200) {
-      posts = (json.decode(response.body) as List)
-          .map((data) => new Post.fromJson(data))
-          .toList();
+
       setState(() {
-        posts = posts;
+        categories = response;
       });
-    } else {
-      throw Exception('Failed to load photos');
-    }
+
 
 
     return "success!";
@@ -56,7 +52,7 @@ class _PostListViewState extends State<PostListView>{
       physics: ClampingScrollPhysics(),
 
       shrinkWrap: true,
-      itemCount: posts.length,
+      itemCount: categories.length,
       itemBuilder: (BuildContext context, int index) {
         return Center(
             child: Column(
@@ -68,7 +64,7 @@ class _PostListViewState extends State<PostListView>{
                   height: 250,
                   child :  InkWell(
                     child: new Card(
-                      color: Colors.transparent,
+                      color: Colors.white,
                       elevation:  5,
                       clipBehavior: Clip.antiAlias,
                       shape: RoundedRectangleBorder(
@@ -85,31 +81,17 @@ class _PostListViewState extends State<PostListView>{
                                         left: 20.0,
                                         right:  20.0),
                                     child: Text(
-                                      posts[index].htmlTitle,
+                                      categories[index].name,
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                         fontWeight: FontWeight.bold,
                                         fontSize:24.0,
                                       ),
                                     )),
-                                Padding(
-                                    padding: EdgeInsets.all(
-                                        14.0),
-                                    child: Html(
-                                      data: posts[index].excerpt,
-                                      defaultTextStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontSize:18.0),
-                                    ))
+
                               ]),
                         ),
-                        decoration: new BoxDecoration(
-                            image: new DecorationImage(
-                                fit: BoxFit.cover,
-                                colorFilter: new ColorFilter.mode(
-                                    Colors.black.withOpacity(0.5),
-                                    BlendMode.darken),
-                                image: new NetworkImage(posts[index].imageUrl))),
+
                       ),
                     ),
                   ),
