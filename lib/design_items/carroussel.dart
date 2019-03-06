@@ -4,9 +4,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:lintellectuel_mobile/models/category.dart';
 import 'package:lintellectuel_mobile/models/post.dart';
-import 'package:lintellectuel_mobile/models/category_repository.dart';
 
 class Carroussel extends StatefulWidget {
+  final Category category;
+  final List<Post> posts;
+
+  const Carroussel({Key key, @required this.category, this.posts})
+      : assert(category != null);
+
   @override
   _CarrousselState createState() => _CarrousselState();
 }
@@ -14,12 +19,11 @@ class Carroussel extends StatefulWidget {
 class _CarrousselState extends State<Carroussel> {
   PageController controller;
   int currentpage = 0;
-  List<Post> posts = List();
-
-
+/* 
   Future<String> _getPosts() async {
+    print("fetching posts data");
     final response = await http.get(
-        "https://www.lintellectuel.com/wp-json/wp/v2/posts?categories=2&_embed=true");
+        "https://www.lintellectuel.com/wp-json/wp/v2/posts?categories="+widget.category.id.toString()+"&_embed=true");
 
     if (response.statusCode == 200) {
       posts = (json.decode(response.body) as List)
@@ -33,14 +37,10 @@ class _CarrousselState extends State<Carroussel> {
       posts = posts;
     });
     return "success!";
-  }
-
-
-
+  } */
 
   @override
   void initState() {
-    _getPosts();
     super.initState();
     controller = new PageController(
         initialPage: currentpage,
@@ -57,14 +57,13 @@ class _CarrousselState extends State<Carroussel> {
 
   @override
   Widget build(BuildContext context) {
-    return  new Container(
-        height: 500,
-          child: new PageView.builder(
-              controller: controller,
-              itemCount: posts.length,
-              itemBuilder: (context, index) => builder(index)),
-      );
-
+    return new Container(
+      height: 500,
+      child: new PageView.builder(
+          controller: controller,
+          itemCount: widget.posts.length,
+          itemBuilder: (context, index) => builder(index)),
+    );
   }
 
   builder(int index) {
@@ -81,12 +80,12 @@ class _CarrousselState extends State<Carroussel> {
         }
 
         return PostItem(
-          datePublished:posts[index].datePublished,
-          title: posts[index].htmlTitle,
-          excerpt: posts[index].excerpt,
-          imageUrl: posts[index].imageUrl.toString(),
-          content: posts[index].htmlContent,
-          authorName: posts[index].authorName,
+          datePublished: widget.posts[index].datePublished,
+          title: widget.posts[index].htmlTitle,
+          excerpt: widget.posts[index].excerpt,
+          imageUrl: widget.posts[index].imageUrl.toString(),
+          content: widget.posts[index].htmlContent,
+          authorName: widget.posts[index].authorName,
           value: value,
           shadowVal: shadowVal,
         );

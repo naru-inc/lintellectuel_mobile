@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:lintellectuel_mobile/models/category.dart';
 import 'package:meta/meta.dart';
+
 const double _kFlingVelocity = 2.0;
 
 class _FrontLayer extends StatelessWidget {
   const _FrontLayer({
     Key key,
+    this.currentCategory,
     this.onTap,
     this.child,
   }) : super(key: key);
 
   final VoidCallback onTap;
   final Widget child;
+  final Category currentCategory;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       elevation: 16.0,
       clipBehavior: Clip.antiAliasWithSaveLayer,
-
       shape: BeveledRectangleBorder(
         borderRadius: BorderRadius.only(topRight: Radius.circular(47.0)),
       ),
@@ -32,7 +35,11 @@ class _FrontLayer extends StatelessWidget {
               alignment: AlignmentDirectional.centerStart,
               child: Padding(
                 padding: const EdgeInsets.all(15),
-                child: Text('À la Une',style: TextStyle(fontSize: 25, color: Colors.black,fontWeight: FontWeight.w300  )),
+                child: Text(currentCategory.name,
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w300)),
               ),
             ),
           ),
@@ -78,20 +85,17 @@ class _BackdropTitle extends AnimatedWidget {
             icon: Stack(children: <Widget>[
               Opacity(
                 opacity: animation.value,
-                child: ImageIcon(NetworkImage('https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Menu%2C_Web_Fundamentals_%28White%29.svg/2000px-Menu%2C_Web_Fundamentals_%28White%29.svg.png')),
+                child: ImageIcon(NetworkImage(
+                    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Menu%2C_Web_Fundamentals_%28White%29.svg/2000px-Menu%2C_Web_Fundamentals_%28White%29.svg.png')),
               ),
-              ]),
+            ]),
           ),
         ),
-        // Here, we do a custom cross fade between backTitle and frontTitle.
-        // This makes a smooth animation between the two texts.
         Stack(
           children: <Widget>[
-              Semantics(
-                    label: 'hide categories menu',
-                    child: ExcludeSemantics(child: backTitle)
-                ),
-
+            Semantics(
+                label: 'hide categories menu',
+                child: ExcludeSemantics(child: backTitle)),
           ],
         )
       ]),
@@ -99,23 +103,25 @@ class _BackdropTitle extends AnimatedWidget {
   }
 }
 
-class Backdrop extends StatefulWidget  {
+class Backdrop extends StatefulWidget {
   final Widget frontLayer;
   final Widget backLayer;
+  final Category currentCategory;
 
-  const Backdrop({
-    @required this.frontLayer,
-    @required this.backLayer
-}) : assert(frontLayer != null),
-  assert(backLayer != null);
+  const Backdrop(
+      {@required this.currentCategory,
+      @required this.frontLayer,
+      @required this.backLayer})
+      : assert(frontLayer != null),
+        assert(backLayer != null),
+        assert(currentCategory != null);
 
   @override
   State<StatefulWidget> createState() => _BackdropState();
-
 }
 
 class _BackdropState extends State<Backdrop>
-  with SingleTickerProviderStateMixin{
+    with SingleTickerProviderStateMixin {
   final GlobalKey _backdropKey = GlobalKey(debugLabel: 'Backdrop');
   AnimationController _controller;
 
@@ -127,8 +133,17 @@ class _BackdropState extends State<Backdrop>
       value: 1.0,
       vsync: this,
     );
+  }
 
+  @override
+  void didUpdateWidget(Backdrop old) {
+    super.didUpdateWidget(old);
 
+    if (widget.currentCategory != old.currentCategory) {
+      _toggleBackdropLayerVisibility();
+    } else if (!_frontLayerVisible) {
+      _controller.fling(velocity: _kFlingVelocity);
+    }
   }
 
   @override
@@ -169,6 +184,7 @@ class _BackdropState extends State<Backdrop>
         PositionedTransition(
           rect: layerAnimation,
           child: _FrontLayer(
+            currentCategory: widget.currentCategory,
             onTap: _toggleBackdropLayerVisibility,
             child: widget.frontLayer,
           ),
@@ -177,31 +193,20 @@ class _BackdropState extends State<Backdrop>
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     var appBar = PreferredSize(
-    preferredSize: Size.fromHeight(60.0),
-    child: AppBar(
-      title: _BackdropTitle(
-        listenable: _controller.view,
-        onPress: _toggleBackdropLayerVisibility,
-        frontTitle: Image(
-            image: AssetImage('images/main_logo_w.png')),
-        backTitle: Image(
-            image: AssetImage('images/main_logo_w.png')),
-      ),
-
-      /*flexibleSpace: Center(
-          child: Padding(
-              padding: EdgeInsets.only(top: 30),
-              child: Image(
-                  image: AssetImage('images/main_logo_w.png'))))*/
-      backgroundColor: Colors.black,
-      elevation: 0,
-
-    ));
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBar(
+          title: _BackdropTitle(
+            listenable: _controller.view,
+            onPress: _toggleBackdropLayerVisibility,
+            frontTitle: Image(image: AssetImage('images/main_logo_w.png')),
+            backTitle: Image(image: AssetImage('images/main_logo_w.png')),
+          ),
+          backgroundColor: Colors.black,
+          elevation: 0,
+        ));
     return Scaffold(
       appBar: appBar,
       body: LayoutBuilder(
@@ -210,4 +215,3 @@ class _BackdropState extends State<Backdrop>
     );
   }
 }
-

@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+
+
 import 'package:lintellectuel_mobile/models/category.dart';
 import 'package:lintellectuel_mobile/models/category_repository.dart';
-import 'package:lintellectuel_mobile/models/post.dart';
-import 'package:flutter_html/flutter_html.dart';
+
 import 'dart:math';
 
 class CategoriesListView extends StatefulWidget {
+  final ValueChanged<Category> onCategoryTap;
+  const CategoriesListView({Key key, @required this.onCategoryTap}) : assert(onCategoryTap != null) ;
+
   @override
   _CategoriesListViewState createState() => _CategoriesListViewState();
 }
 
 class _CategoriesListViewState extends State<CategoriesListView> {
+
+
   List<Category> categories = [];
   ScrollController _scrollController = new ScrollController();
   bool isPerformingRequest = false;
@@ -50,13 +54,20 @@ class _CategoriesListViewState extends State<CategoriesListView> {
     super.dispose();
   }
 
-  double generateRandom(){
-    var rng=new Random();
-    return rng.nextInt(150)+80.0;
+  double generateRandom() {
+    var rng = new Random();
+    return rng.nextInt(150) + 80.0;
+  }
+
+  void changeCategory(){
+
+
   }
 
   @override
   Widget build(BuildContext context) {
+
+
     return new Container(
         child: ListView.builder(
       physics: ClampingScrollPhysics(),
@@ -64,42 +75,44 @@ class _CategoriesListViewState extends State<CategoriesListView> {
       itemCount: categories.length,
       controller: _scrollController,
       itemBuilder: (context, index) {
-        return Stack(
-          children: <Widget>[
-          Positioned(
-          left: this.generateRandom(),
 
-child:
-          Container(
-              child: Container(
-                  child: Center(
-                child: Text(
-                  categories[index].count.toString(),
-                  style: TextStyle(
-                      color: Colors.white30,
+        return InkWell(
+          onTap:  () => widget.onCategoryTap(categories[index]),
 
-                      fontSize: 45,
-                      fontWeight: FontWeight.w700),
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                left: this.generateRandom(),
+                child: Container(
+                  child: Container(
+                      child: Center(
+                        child: Text(
+                          categories[index].count.toString(),
+                          style: TextStyle(
+                              color: Colors.white30,
+                              fontSize: 45,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      )),
                 ),
-              )),
-            ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    child: Center(
+                      child: Text(
+                        categories[index].name.toUpperCase(),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )),
+              ),
+            ],
           ),
-
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  child: Center(
-                child: Text(
-                  categories[index].name.toUpperCase(),
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold),
-                ),
-              )),
-            ),
-          ],
         );
+
       },
     ));
   }

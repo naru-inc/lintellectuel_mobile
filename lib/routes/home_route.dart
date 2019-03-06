@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:lintellectuel_mobile/design_items/carroussel.dart';
-import 'package:lintellectuel_mobile/design_items/post_listview.dart';
 import 'package:lintellectuel_mobile/models/category.dart';
+import 'package:lintellectuel_mobile/models/post.dart';
 
-class HomeRoute extends StatelessWidget{
+class HomeRoute extends StatelessWidget {
+  final Category category;
+  final List<Post> posts;
+  final Future<List<Post>> getPosts;
+
+  const HomeRoute({Key key, @required this.category, this.posts,this.getPosts});
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Container(child:
-    Center(
-        child:Carroussel()
-    )
-      );
+    return FutureBuilder <List<Post>>(
+      future: getPosts,
+      builder:  (context, snapshot) {
+        return Container(child: Center(child: Carroussel(category: category, posts:snapshot.data)));
 
+      }
+      
+
+    );
   }
-
-
 }
