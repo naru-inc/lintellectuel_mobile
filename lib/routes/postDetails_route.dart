@@ -23,7 +23,7 @@ class PostDetailRoute extends StatelessWidget {
         child:
             //height: 500,
             Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(10.0),
                 child: new Card(
                   color: Colors.white,
                   elevation: 2,
@@ -60,7 +60,7 @@ class PostDetailRoute extends StatelessWidget {
                                child: Html(
                                   data: this.content,
                                   defaultTextStyle: TextStyle(
-                                      color: Colors.black, fontSize: 12.0),
+                                      color: Colors.black, fontSize: 14.0),
                                   customRender: (node, children) {
                                     if (node is dom.Element) {  
                                       switch (node.localName) {

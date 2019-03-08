@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lintellectuel_mobile/design_items/post_item.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:lintellectuel_mobile/models/category.dart';
 import 'package:lintellectuel_mobile/models/post.dart';
 
@@ -19,25 +18,7 @@ class Carroussel extends StatefulWidget {
 class _CarrousselState extends State<Carroussel> {
   PageController controller;
   int currentpage = 0;
-/* 
-  Future<String> _getPosts() async {
-    print("fetching posts data");
-    final response = await http.get(
-        "https://www.lintellectuel.com/wp-json/wp/v2/posts?categories="+widget.category.id.toString()+"&_embed=true");
 
-    if (response.statusCode == 200) {
-      posts = (json.decode(response.body) as List)
-          .map((data) => new Post.fromJson(data))
-          .toList();
-    } else {
-      throw Exception('Failed to load photos');
-    }
-
-    setState(() {
-      posts = posts;
-    });
-    return "success!";
-  } */
 
   @override
   void initState() {

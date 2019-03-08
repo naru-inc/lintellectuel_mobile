@@ -16,10 +16,20 @@ class HomeRoute extends StatelessWidget {
     return FutureBuilder <List<Post>>(
       future: getPosts,
       builder:  (context, snapshot) {
+                      if(snapshot.connectionState == ConnectionState.done) {
+
+                if(snapshot.hasError){
+                  return Text("Error");
+                }
+
         return Container(child: Center(child: Carroussel(category: category, posts:snapshot.data)));
 
+              }
+              else
+                return Container(child: Center(child:CircularProgressIndicator()));
+
+
       }
-      
 
     );
   }

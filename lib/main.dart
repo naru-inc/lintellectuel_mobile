@@ -57,11 +57,7 @@ class _LintellectuelAppState extends State<LintellectuelApp> {
     } else {
       throw Exception('Failed to load photos');
     }
-    print(posts.length);
-
-   
-
-
+  
     return posts;
   }
 
