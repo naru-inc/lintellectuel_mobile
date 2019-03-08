@@ -10,14 +10,11 @@ class CategoryRepository {
     final response = await http.get(
         "https://www.lintellectuel.com/wp-json/wp/v2/categories?page=1&per_page=20&hide_empty=true&orderby=count&order=desc");
 
-    if (response.statusCode == 200) {
       categories = (json.decode(response.body) as List)
           .map((data) => new Category.fromJson(data))
           .toList();
 
-    } else {
-      throw Exception('Failed to load categories');
-    }
+  
 
     return categories;
   }
