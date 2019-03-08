@@ -50,13 +50,10 @@ class _LintellectuelAppState extends State<LintellectuelApp> {
     final response = await http.get(
         "https://www.lintellectuel.com/wp-json/wp/v2/posts?categories="+category.id.toString()+"&_embed=true");
 
-    if (response.statusCode == 200) {
       posts = (json.decode(response.body) as List)
           .map((data) => new Post.fromJson(data))
           .toList();
-    } else {
-      throw Exception('Failed to load photos');
-    }
+  
   
     return posts;
   }
