@@ -98,14 +98,18 @@ Widget _progressCarou(){
    
     return  Stack(children: <Widget>[
       BackdropFilter(
-                   filter: new ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                   filter: new ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                    child: new Container(
                      decoration: new BoxDecoration(
                          color: Colors.white.withOpacity(0.5)),
                    ),
                  ),
                  Center(
-                   child: CircularProgressIndicator(),
+                   child: SizedBox(
+                child: CircularProgressIndicator(),
+                height: 80.0,
+                width: 80.0,
+              )
                  )
                  
 
