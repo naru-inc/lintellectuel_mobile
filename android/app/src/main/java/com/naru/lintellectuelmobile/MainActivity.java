@@ -1,4 +1,4 @@
-package com.example.lintellectuelmobile;
+package com.naru.lintellectuelmobile;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
