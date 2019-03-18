@@ -11,6 +11,7 @@ class PostItem extends StatelessWidget {
   final double value;
   final double shadowVal;
   final DateTime datePublished;
+  final bool isLoading;
 
 
   const PostItem(
@@ -19,7 +20,7 @@ class PostItem extends StatelessWidget {
       this.excerpt,
       this.imageUrl,
       this.value,
-      this.shadowVal, this.content, this.authorName, this.datePublished})
+      this.shadowVal, this.content, this.authorName, this.datePublished, this.isLoading})
       : super(key: key);
 
       void _navigateToPostDetail (BuildContext context){

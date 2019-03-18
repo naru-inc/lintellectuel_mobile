@@ -7,8 +7,10 @@ class HomeRoute extends StatelessWidget {
   final Category category;
   final List<Post> posts;
   final Future<List<Post>> getPosts;
+  final int totalPages;
 
-  const HomeRoute({Key key, @required this.category, this.posts,this.getPosts});
+  const HomeRoute({Key key, @required this.category, this.posts,this.getPosts, this.totalPages});
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,10 @@ class HomeRoute extends StatelessWidget {
                   return Text("Error");
                 }
 
-        return Container(child: Center(child: Carroussel(category: category, posts:snapshot.data)));
+        return Container(child: Center(child:
+           Carroussel(category: category, posts:snapshot.data, totalPages :totalPages),
+      
+      ));
 
               }
               else
